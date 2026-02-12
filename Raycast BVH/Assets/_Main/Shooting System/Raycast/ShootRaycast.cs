@@ -179,18 +179,23 @@ public class ShootRaycast : MonoBehaviour
         float multiplier = bodyMultiplier;
         hitType = "Body";
 
-        if (name.Contains("head"))
+        if (name.Contains("cabeça") || name.Contains("orelha") || name.Contains("testa"))
         {
             multiplier = _headMultiplier;
             hitType = "Headshot!";
             _headshotsDealt++;
         }
-        else if (name.Contains("arm"))
+        else if (name.Contains("tronco"))
+        {
+            multiplier = bodyMultiplier;
+            hitType = "Body shot!";
+        }
+        else if (name.Contains("braço") || name.Contains("mão") || name.Contains("antebraço"))
         {
             multiplier = _limbsMultiplier;
             hitType = "Arm shot!";
         }
-        else if(name.Contains("leg"))
+        else if(name.Contains("perna") || name.Contains("canela") || name.Contains("pé"))
         {
             multiplier = _limbsMultiplier;
             hitType = "Leg shot!";
@@ -231,6 +236,7 @@ public class ShootRaycast : MonoBehaviour
         _useBVH = !_useBVH;
     }
 
+    // Substitua seu método UseBVH atual por este:
     RaycastHit UseBVH(Ray ray, out EnemiesBVH hitEnemie, out bool found)
     {
         float minDst = _rayDistance;
@@ -240,28 +246,63 @@ public class ShootRaycast : MonoBehaviour
 
         foreach (var e in _allEnemies)
         {
-            if (e == null) continue;
+            if (e == null || e.rootNode == null) continue;
 
-            List<Collider> allParts = new List<Collider>();
-            allParts.AddRange(e.upperBodyParts);
-            allParts.AddRange(e.lowerBodyParts);
-
-            foreach (var part in allParts)
+            // O SEGREDO: Testamos a árvore do inimigo recursivamente
+            if (CheckNode(e.rootNode, ray, out RaycastHit tempHit))
             {
-                if (part == null) continue;
-                if (part.Raycast(ray, out RaycastHit tempHit, _rayDistance))
+                if (tempHit.distance < minDst)
                 {
-                    if (tempHit.distance < minDst)
-                    {
-                        minDst = tempHit.distance;
-                        best = tempHit;
-                        hitEnemie = e;
-                        found = true;
-                    }
+                    minDst = tempHit.distance;
+                    best = tempHit;
+                    hitEnemie = e;
+                    found = true;
                 }
             }
         }
         return best;
+    }
+
+    // Novo método auxiliar recursivo
+    private bool CheckNode(BVHNodes node, Ray ray, out RaycastHit hit)
+    {
+        hit = new RaycastHit();
+
+        if (!node.aabb.IntersectRay(ray)) return false;
+
+        if (node.left == null && node.right == null)
+        {
+            bool hitAny = false;
+            float closest = float.MaxValue;
+
+            foreach (var col in node.leafCollider)
+            {
+                if (col.Raycast(ray, out RaycastHit temp, _rayDistance))
+                {
+                    if (temp.distance < closest)
+                    {
+                        closest = temp.distance;
+                        hit = temp;
+                        hitAny = true;
+                    }
+                }
+            }
+            return hitAny;
+        }
+
+        // 3. Se não for folha, checa os filhos
+        bool hitLeft = CheckNode(node.left, ray, out RaycastHit hitL);
+        bool hitRight = CheckNode(node.right, ray, out RaycastHit hitR);
+
+        if (hitLeft && hitRight)
+        {
+            hit = (hitL.distance < hitR.distance) ? hitL : hitR;
+            return true;
+        }
+        if (hitLeft) { hit = hitL; return true; }
+        if (hitRight) { hit = hitR; return true; }
+
+        return false;
     }
 
     RaycastHit DontUseBVH(Ray ray, out EnemiesBVH hitEnemie, out bool found)
