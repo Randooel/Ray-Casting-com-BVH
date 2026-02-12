@@ -29,6 +29,8 @@ public class EnemiesBVH : MonoBehaviour
     {
         BVHNodes node = new BVHNodes();
 
+        node.leafCollider = new List<Collider>(parts);
+
         Bounds combinedBounds = new Bounds();
         if (parts.Count > 0)
         {
@@ -38,6 +40,7 @@ public class EnemiesBVH : MonoBehaviour
                 combinedBounds.Encapsulate(parts[i].bounds);
             }
         }
+
         node.aabb = combinedBounds;
         return node;
     }

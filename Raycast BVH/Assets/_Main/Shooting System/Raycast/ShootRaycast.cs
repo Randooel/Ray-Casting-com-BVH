@@ -114,6 +114,7 @@ public class ShootRaycast : MonoBehaviour
     void Update()
     {
         _aliveEnemies = _allEnemies.Count(z => z != null);
+        _aliveEnemies = _allEnemies.Count;
     }
     #endregion
 
