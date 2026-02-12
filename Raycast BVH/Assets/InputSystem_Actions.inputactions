@@ -95,6 +95,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Tab",
+                    "type": "Button",
+                    "id": "e00711ff-d218-4760-ab6f-c513a2c76c9c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -491,6 +500,28 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Exit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "534646f5-a9b3-47a5-9bd4-e595d78c2201",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ce9b8941-6d22-4260-b1ed-69a8cea4ba0c",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Tab",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
