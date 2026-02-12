@@ -546,13 +546,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemiesBVH
   upperBodyParts:
+  - {fileID: 1237434237657782863}
   - {fileID: 5632122789782199386}
+  - {fileID: 5098775523188257150}
+  - {fileID: 8649702113601406858}
   - {fileID: 4440619655273630580}
   - {fileID: 2139483468930835191}
-  - {fileID: 0}
+  - {fileID: 5658004061890235402}
+  - {fileID: 8949097357684040399}
+  - {fileID: 3477182992534291543}
+  - {fileID: 5032619236450930388}
+  - {fileID: 3556565602866784521}
   lowerBodyParts:
   - {fileID: 311988075706509254}
-  - {fileID: 0}
+  - {fileID: 2390147800834452767}
+  - {fileID: 4358037495759984377}
+  - {fileID: 5747434355829994785}
+  - {fileID: 3357601115929241047}
+  - {fileID: 2396952089005863918}
 --- !u!114 &7785801353894248555
 MonoBehaviour:
   m_ObjectHideFlags: 0

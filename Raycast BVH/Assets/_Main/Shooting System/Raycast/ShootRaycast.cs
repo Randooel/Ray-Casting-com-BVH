@@ -39,6 +39,7 @@ public class ShootRaycast : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _feedbackText;
     [SerializeField] private TextMeshProUGUI _damageText;
+    [SerializeField] private TextMeshProUGUI _bhvModeText;
 
     #region New Input System Actions
     [SerializeField] private InputActionAsset _inputAsset;
@@ -100,6 +101,7 @@ public class ShootRaycast : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
 
         _useBVH = true;
+        _bhvModeText.text = "BVH Mode: " + _useBVH;
         RefreshEnemyList();
     }
 
@@ -234,6 +236,7 @@ public class ShootRaycast : MonoBehaviour
     private void ToggleBVHUse(InputAction.CallbackContext context)
     {
         _useBVH = !_useBVH;
+        _bhvModeText.text = "BVH Mode: " + _useBVH;
     }
 
     // Substitua seu método UseBVH atual por este:
