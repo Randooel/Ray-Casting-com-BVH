@@ -239,7 +239,6 @@ public class ShootRaycast : MonoBehaviour
         _bhvModeText.text = "BVH Mode: " + _useBVH;
     }
 
-    // Substitua seu método UseBVH atual por este:
     RaycastHit UseBVH(Ray ray, out EnemiesBVH hitEnemie, out bool found)
     {
         float minDst = _rayDistance;
@@ -251,7 +250,7 @@ public class ShootRaycast : MonoBehaviour
         {
             if (e == null || e.rootNode == null) continue;
 
-            // O SEGREDO: Testamos a árvore do inimigo recursivamente
+            // Testar árvore do inimigo recursivamente
             if (CheckNode(e.rootNode, ray, out RaycastHit tempHit))
             {
                 if (tempHit.distance < minDst)
@@ -266,7 +265,6 @@ public class ShootRaycast : MonoBehaviour
         return best;
     }
 
-    // Novo método auxiliar recursivo
     private bool CheckNode(BVHNodes node, Ray ray, out RaycastHit hit)
     {
         hit = new RaycastHit();
